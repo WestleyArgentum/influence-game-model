@@ -9,6 +9,10 @@ using JSON
 include("team.jl")
 include("game.jl")
 
-game = Game("./data/112th-bills.json", "./data/112th-industries.json")
+game_path = dirname(@__FILE__)
+bill_data_path = joinpath(game_path, "../data/112th-bills.json")
+industries_path = joinpath(game_path, "../data/crp-categories.json")
+
+game = Game(bill_data_path, industries_path)
 
 end
