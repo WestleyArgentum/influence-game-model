@@ -95,7 +95,7 @@ function step(g::Game)
     action = g.bills[last(event)]
 
     score_industries(event, action, g.industries, "support")
-    score_industries(event, action, g.industries, "opposed")
+    score_industries(event, action, g.industries, "oppose")
 
     true
 end
