@@ -65,7 +65,7 @@ end
 
 function build_industry_list(industry_data_file)
     data = JSON.parse(readall(industry_data_file))
-    { id => { "name" => name, "score" => 0, "events" => Any[] } for (id, name) in data }
+    { id => { "details" => details, "score" => 0, "events" => Any[] } for (id, details) in data }
 end
 
 function score_change(action_type, action, position)
