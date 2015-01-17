@@ -19,7 +19,7 @@ add_industries(ateam_112, all_industry_codes)
 while step(game_112) end
 
 industries_112 = [ industry for (id, industry) in game_112.industries ]
-sort!(industries_112; lt = (lhs, rhs) -> lhs["score"] < rhs["score"])
+sort!(industries_112; lt = (lhs, rhs) -> lhs["score"] > rhs["score"])
 
 
 # 113th data
@@ -33,4 +33,4 @@ add_industries(ateam_113, all_industry_codes)
 while step(game_113) end
 
 industries_113 = [ industry for (id, industry) in game_113.industries ]
-sort!(industries_113; lt = (lhs, rhs) -> lhs["score"] < rhs["score"])
+sort!(industries_113; lt = (lhs, rhs) -> lhs["score"] > rhs["score"])
