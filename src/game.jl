@@ -83,12 +83,12 @@ end
 function score_change(system::ScoringSystem, action_type, action, position)
     if action_type == "vote"
         if action["passed"]
-            position == "support" ? 12 : -6
+            position == "support" ? system.support_passed : system.opposed_passed
         else
-            position == "support" ? -6 : 12
+            position == "support" ? system.support_failed : system.oppose_failed
         end
     elseif action_type == "introduced"
-        position == "support" ? 1 : 3
+        position == "support" ? system.support_introduced : system.oppose_introduced
     end
 end
 
