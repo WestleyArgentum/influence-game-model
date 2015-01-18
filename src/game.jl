@@ -1,6 +1,7 @@
 
 type Game
     teams
+    scoring_system
     industries
     bills
     timeline
@@ -10,8 +11,19 @@ type Game
         industries = build_industry_list(industry_data_file)
         timeline = build_timeline(bills)
 
-        new(Team[], industries, bills, timeline)
+        new(Team[], ScoringSystem(), industries, bills, timeline)
     end
+end
+
+type ScoringSystem
+    support_passed
+    opposed_passed
+    support_failed
+    oppose_failed
+    support_introduced
+    oppose_introduced
+
+    ScoringSystem(s_p = 12, o_p = -6, s_f = -6, o_f = 12, s_i = 1, o_i = 3) = new(s_p, o_p, s_f, o_f, s_i, o_i)
 end
 
 function create_team(g::Game, name)
@@ -68,7 +80,7 @@ function build_industry_list(industry_data_file)
     { id => { "details" => details, "score" => 0, "events" => Any[] } for (id, details) in data }
 end
 
-function score_change(action_type, action, position)
+function score_change(system::ScoringSystem, action_type, action, position)
     if action_type == "vote"
         if action["passed"]
             position == "support" ? 12 : -6
@@ -80,10 +92,10 @@ function score_change(action_type, action, position)
     end
 end
 
-function score_industries(event, action, industries, position)
+function score_industries(system::ScoringSystem, event, action, industries, position)
     for id in action["positions"][position]
         industry = industries[id]
-        industry["score"] += score_change(first(event), action, position)
+        industry["score"] += score_change(system, first(event), action, position)
         push!(industry["events"], event)
     end
 end
@@ -94,8 +106,8 @@ function step(g::Game)
     event = dequeue!(g.timeline)
     action = g.bills[last(event)]
 
-    score_industries(event, action, g.industries, "support")
-    score_industries(event, action, g.industries, "oppose")
+    score_industries(g.scoring_system, event, action, g.industries, "support")
+    score_industries(g.scoring_system, event, action, g.industries, "oppose")
 
     true
 end

@@ -1,7 +1,7 @@
 
 module InfluenceGame
 
-export Game, create_team, step, add_industry, add_industries, score
+export Game, ScoringSystem, create_team, step, add_industry, add_industries, score
 
 using Base.Collections
 using JSON
